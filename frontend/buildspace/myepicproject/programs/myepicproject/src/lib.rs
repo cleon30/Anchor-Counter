@@ -26,6 +26,30 @@ pub mod myepicproject {
         base_account.total_gifs += 1;
         Ok(())
     }
+    pub fn up_vote_dog(ctx: Context<UpdateGif>, index: u64) -> Result<()> {
+        let base_account = &mut ctx.accounts.base_account;
+
+        let i = index as usize;
+        if i < base_account.gif_list.len() {
+            let mut item = &mut base_account.gif_list[i];
+            item.votes += 1;
+        }
+
+        Ok(())
+    }
+    pub fn up_vote_cat(ctx: Context<UpdateGif>, index: u64) -> Result<()> {
+        let base_account = &mut ctx.accounts.base_account;
+
+        let i = index as usize;
+        if i < base_account.gif_list.len() {
+            let mut item = &mut base_account.gif_list[i];
+            item.votes += 1;
+        }
+
+        Ok(())
+    }
+
+    
 }
 
 #[derive(Accounts)]
