@@ -7,7 +7,7 @@ You can install that dependencies following this tutorial : https://project-seru
 
 When you are set up, you can run the App doing the following commands:
 ```bash
-solana config set --url localhost
+solana config set --url https://api.devnet.solana.com
 ```
 ```bash
 cd solana-voting-application
