@@ -26,7 +26,7 @@ pub mod myepicproject {
         base_account.total_gifs += 1;
         Ok(())
     }
-    pub fn up_vote_dog(ctx: Context<UpdateGif>, index: u64) -> Result<()> {
+    /* pub fn up_vote_dog(ctx: Context<UpdateGif>, index: u64) -> Result<()> {
         let base_account = &mut ctx.accounts.base_account;
 
         let i = index as usize;
@@ -47,7 +47,7 @@ pub mod myepicproject {
         }
 
         Ok(())
-    }
+    } */
 
     
 }
