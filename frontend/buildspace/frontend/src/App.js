@@ -146,7 +146,6 @@ const App = () => {
         },
       });
       console.log("GIF sucesfully sent to program", inputValue)
-
       await getGifList();
     } catch (error) {
       console.log("Error sending GIF:", error)
@@ -227,7 +226,7 @@ const App = () => {
 			{/* This was solely added for some styling fanciness */}
 			<div className={walletAddress ? 'authed-container' : 'container'}>
         <div className="header-container">
-          <p className="header">🖼 Solana GIF Portal</p>
+          <p className="header">🖼 Solana Doge Contest</p>
           <p className="sub-text">
             View your GIF collection in the metaverse ✨
           </p>
