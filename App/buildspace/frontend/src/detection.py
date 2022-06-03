@@ -8,9 +8,7 @@ from PIL import Image
 import urllib.request
 import numpy as np
 import json
-def read_in():
-    lines = sys.stdin.readlines()
-    return json.loads(lines[0])
+
     
 def detection_object(url):
 
@@ -44,9 +42,9 @@ def detection_object(url):
                     color=(0, 255, 0), thickness=2)
     return c
 
-data_input = read_in()
+data_input = 'https://media.istockphoto.com/photos/group-of-various-breeds-of-cats-sitting-next-to-each-other-looking-at-picture-id1278389859?k=20&m=1278389859&s=612x612&w=0&h=SAC0uiXC8Qc-4FmQTYZYzLs5H7DbErAnq-8EmLOZwJ4='
 output = detection_object(data_input)
-sys.stdout.write(str(output))
+print(output)
 
 
     
