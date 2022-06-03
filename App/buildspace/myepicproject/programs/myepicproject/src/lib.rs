@@ -51,6 +51,11 @@ pub mod myepicproject {
 
     
 }
+//#[error]
+//pub enum Err {
+//    #[msg("No item with that url found")]
+//    NoItemFound,
+//}
 
 #[derive(Accounts)]
 pub struct StartStuffOff<'info> {
@@ -66,7 +71,11 @@ pub struct AddGif<'info> {
     #[account(mut)]
     pub base_account: Account<'info, BaseAccount>,
 }
-
+//#[derive(Accounts)]
+//pub struct UpdateGif<'info> {
+//    #[account(mut)]
+//    pub base_account: Account<'info, BaseAccount>,
+//}
 // Create a custom struct for us to work with.
 #[derive(Debug, Clone, AnchorSerialize, AnchorDeserialize)]
 pub struct ItemStruct {
