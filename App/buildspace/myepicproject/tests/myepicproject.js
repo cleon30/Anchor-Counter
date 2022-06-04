@@ -26,7 +26,7 @@ const main = async () => {
   const value2 = new anchor.BN(2);
   const value3 = new anchor.BN(1);
   const value4 = new anchor.BN(2);
-  // You'll need to now pass a GIF link to the function!
+  // You'll need to now pass a Image link to the function and [dog_count, cat_count] from AI!
   await program.rpc.addImage("insert_a_giphy_link_here",value1, value2, {
     accounts: {
       baseAccount: baseAccount.publicKey,
@@ -46,11 +46,11 @@ const main = async () => {
   // Call the account.
   account = await program.account.baseAccount.fetch(baseAccount.publicKey);
   console.log("👀 Images Count", account.imageCount.toString());
-  console.log("👀 Dog Count", account.dogCount.toString());
-  console.log("👀 Cat Count", account.catCount.toString());
+  console.log("🐶 Dog Count", account.dogCount.toString());
+  console.log("🐱 Cat Count", account.catCount.toString());
   
-  // Access gif_list on the account!
-  console.log("👀 Images List", account.images);
+  // Access image_list on the account!
+  console.log("📸📸 Images List", account.images);
 };
 
 const runMain = async () => {
