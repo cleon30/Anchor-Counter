@@ -21,7 +21,7 @@ const main = async () => {
   console.log("📝 Your transaction signature", tx);
 
   let account = await program.account.baseAccount.fetch(baseAccount.publicKey);
-  console.log("👀 GIF Count", account.imageCount.toString());
+  console.log("👀 Images Count", account.imageCount.toString());
   const value1 = new anchor.BN(4);
   const value2 = new anchor.BN(2);
   const value3 = new anchor.BN(1);
@@ -45,12 +45,12 @@ const main = async () => {
 
   // Call the account.
   account = await program.account.baseAccount.fetch(baseAccount.publicKey);
-  console.log("👀 GIF Count", account.imageCount.toString());
+  console.log("👀 Images Count", account.imageCount.toString());
   console.log("👀 Dog Count", account.dogCount.toString());
   console.log("👀 Cat Count", account.catCount.toString());
   
   // Access gif_list on the account!
-  console.log("👀 GIF List", account.images);
+  console.log("👀 Images List", account.images);
 };
 
 const runMain = async () => {
