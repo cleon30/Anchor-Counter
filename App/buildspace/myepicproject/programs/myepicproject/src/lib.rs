@@ -6,53 +6,23 @@ declare_id!("5CJC9SLexjdFwJvuTJaSHg25j3bF9bmXkXm2mhAmFeMm");
 pub mod myepicproject {
     use super::*;
     pub fn start_stuff(ctx: Context<StartStuff>) -> Result<()> {
-        let base_account = &mut ctx.accounts.base_account;
-        base_account.image_count = 0;
-        base_account.dog_count = 0;
-        base_account.cat_count = 0;
-        base_account.images = Vec::new();
-        Ok(())
+        ctx.accounts
+            .base_account
+            .initialize()
     }
 
     // The function now accepts a gif_link param from the user.
-    pub fn add_image(ctx: Context<AddImage>, img_link: String) -> Result<()> {
-        let base_account = &mut ctx.accounts.base_account;
-
-        // Build the struct.
-        let item = Image {
-            image_link: img_link.to_string(),
-            user_address: *base_account.to_account_info().key,
-        };
-
-        // Add it to the images vector.
-        base_account.images.push(item);
-        base_account.image_count += 1;
-        Ok(())
+    pub fn add_image(ctx: Context<AddImage>, image_link: String, cats: u64, dogs: u64) -> Result<()> {
+        ctx.accounts
+            .base_account
+            .add_image(image_link, cats, dogs)
     }
-    /* pub fn up_vote_dog(ctx: Context<UpdateGif>, index: u64) -> Result<()> {
-        let base_account = &mut ctx.accounts.base_account;
 
-        let i = index as usize;
-        if i < base_account.gif_list.len() {
-            let mut item = &mut base_account.gif_list[i];
-            item.votes += 1;
-        }
-
-        Ok(())
+    pub fn update_count(ctx: Context<CountImages>) -> Result<()> {
+        ctx.accounts
+            .base_account
+            .update_count()
     }
-    pub fn up_vote_cat(ctx: Context<UpdateGif>, index: u64) -> Result<()> {
-        let base_account = &mut ctx.accounts.base_account;
-
-        let i = index as usize;
-        if i < base_account.gif_list.len() {
-            let mut item = &mut base_account.gif_list[i];
-            item.votes += 1;
-        }
-
-        Ok(())
-    } */
-
-    
 }
 
 #[derive(Accounts)]
@@ -70,18 +40,57 @@ pub struct AddImage<'info> {
     pub base_account: Account<'info, BaseAccount>,
 }
 
+#[derive(Accounts)]
+pub struct CountImages<'info> {
+    #[account(mut)]
+    pub base_account: Account<'info, BaseAccount>
+}
+
 // Create a custom struct to represent image information
 #[derive(Debug, Clone, AnchorSerialize, AnchorDeserialize)]
 pub struct Image {
     pub image_link: String,
-    pub user_address: Pubkey,
+    pub cat_count: u64,
+    pub dog_count: u64,
 }
 
 #[account]
 pub struct BaseAccount {
-    pub image_count: u64,
-    pub dog_count: u64,
-    pub cat_count: u64,
-    // Attach a Vector of type ItemStruct to the account.
-    pub images: Vec<Image>,
+    image_count: u64,
+    dog_count: u64,
+    cat_count: u64,
+    images: Vec<Image>,
+}
+
+impl BaseAccount {
+    pub fn initialize(&mut self) -> Result<()> {
+        self.image_count = 0;
+        self.dog_count = 0;
+        self.cat_count = 0;
+        self.images = Vec::new();
+        Ok(())
+    }
+
+    pub fn add_image(&mut self, link: String, cats: u64, dogs: u64 ) -> Result<()> {
+        
+        let item = Image {
+            image_link: link.to_string(),
+            cat_count: cats,
+            dog_count: dogs,
+        };
+
+        // Update the images vector
+        self.images.push(item);
+        Ok(())
+    }
+
+    pub fn update_count(&mut self) -> Result<()> {
+        // Iteratively update our count variables
+        for image in self.images.to_owned() {
+            self.cat_count += image.cat_count;
+            self.dog_count += image.dog_count;
+            self.image_count += 1;
+        }
+        Ok(())
+    }
 }
