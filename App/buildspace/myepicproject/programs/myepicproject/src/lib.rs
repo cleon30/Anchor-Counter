@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-declare_id!("5CJC9SLexjdFwJvuTJaSHg25j3bF9bmXkXm2mhAmFeMm");
+declare_id!("H2q9kpqbUFZx7v6B73iNKXmczeyd9aQbNurPJ5Nkf8oF");
 
 #[program]
 pub mod myepicproject {
@@ -64,6 +64,7 @@ pub struct BaseAccount {
 
 impl BaseAccount {
     pub fn initialize(&mut self) -> Result<()> {
+        // set variables to default
         self.image_count = 0;
         self.dog_count = 0;
         self.cat_count = 0;
@@ -72,20 +73,19 @@ impl BaseAccount {
     }
 
     pub fn add_image(&mut self, link: String, cats: u64, dogs: u64 ) -> Result<()> {
-        
         let item = Image {
             image_link: link.to_string(),
             cat_count: cats,
             dog_count: dogs,
         };
 
-        // Update the images vector
+        // Add image to base_account
         self.images.push(item);
         Ok(())
     }
 
     pub fn update_count(&mut self) -> Result<()> {
-        // Iteratively update our count variables
+        // Iterate over Vec<images> and update count variables
         for image in self.images.to_owned() {
             self.cat_count += image.cat_count;
             self.dog_count += image.dog_count;
