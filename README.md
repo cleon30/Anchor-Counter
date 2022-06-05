@@ -15,15 +15,6 @@ When you are set up, you can run the App doing the following commands:
 ```bash
 solana config set --url https://api.devnet.solana.com
 ```
-```bash
-cd solana-voting-application
-npm i
-yarn add ts-mocha
-```
-```bash
-solana-test-validator
-# Open in other console de test validator!
-```
 
 ```bash
 anchor build

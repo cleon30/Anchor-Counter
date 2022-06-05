@@ -2,8 +2,8 @@ const anchor = require("@project-serum/anchor");
 const { SystemProgram } = anchor.web3;
 
 const main = async () => {
-  console.log(" Starting test...");
-
+  console.log("🚀 Starting test...");
+  
   const provider = anchor.Provider.env();
   anchor.setProvider(provider);
 
@@ -17,13 +17,10 @@ const main = async () => {
     },
     signers: [baseAccount],
   });
-
-  // Call the account.
-  let account = await program.account.baseAccount.fetch(baseAccount.publicKey);
-  console.log("Initial values:");
+  
+  console.log("📝 Your transaction signature", tx);
   console.log("");
   console.log(" GIF Count", account.imageCount.toString());
-  console.log(" Dog Count", account.dogCount.toString());
   console.log(" Cat Count", account.catCount.toString());
 
   // Access gif_list on the account!
@@ -32,11 +29,14 @@ const main = async () => {
   console.log(" Your transaction signature", tx);
 
   console.log(" GIF Count", account.imageCount.toString());
+
+  console.log("👀 Images Count", account.imageCount.toString());
+
   const value1 = new anchor.BN(4);
   const value2 = new anchor.BN(2);
   const value3 = new anchor.BN(1);
   const value4 = new anchor.BN(2);
-  // You'll need to now pass a GIF link to the function!
+  // You'll need to now pass a Image link to the function and [dog_count, cat_count] from AI!
   await program.rpc.addImage("insert_a_giphy_link_here",value1, value2, {
     accounts: {
       baseAccount: baseAccount.publicKey,
@@ -47,8 +47,7 @@ const main = async () => {
       baseAccount: baseAccount.publicKey,
     },
   });
-
-  await program.rpc.update_count({
+  await program.rpc.updateCount({
     accounts: {
       baseAccount: baseAccount.publicKey,
     },
@@ -56,19 +55,18 @@ const main = async () => {
 
   // Call the account.
   account = await program.account.baseAccount.fetch(baseAccount.publicKey);
-  console.log("\n\nUpdated values:");
-  console.log(" GIF Count", account.imageCount.toString());
-  console.log(" Dog Count", account.dogCount.toString());
-  console.log(" Cat Count", account.catCount.toString());
-
-  // Access gif_list on the account!
-  console.log(" GIF List", account.images);
+  console.log("👀 Images Count", account.imageCount.toString());
+  console.log("🐶 Dog Count", account.dogCount.toString());
+  console.log("🐱 Cat Count", account.catCount.toString());
+  
+  // Access image_list on the account!
+  console.log("📸📸 Images List", account.images);
 };
 
 const runMain = async () => {
   try {
     await main();
-
+    
     process.exit(0);
   } catch (error) {
     console.error(error);
