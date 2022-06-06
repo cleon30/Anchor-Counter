@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, createRef } from 'react';
 import twitterLogo from './assets/twitter-logo.svg';
 import './App.css';
 import { Connection, PublicKey, clusterApiUrl} from '@solana/web3.js';
 import {
   Program, Provider, web3
 } from '@project-serum/anchor';
+import countCatsAndDogs from './countCatsAndDogs';
 
 import idl from './idl.json';
 import kp from './keypair.json';
@@ -35,6 +36,8 @@ const App = () => {
   const [walletAddress, setWalletAddress] = useState(null);
   const [inputValue, setInputValue] = useState('');
   const [gifList, setGifList] = useState([]);
+
+  const imgRef = createRef();
   
   // Actions
   const checkIfWalletIsConnected = async () => {
@@ -135,12 +138,14 @@ const App = () => {
       console.log("No gif link given!")
       return
     }
+    const [cats, dogs] = countCatsAndDogs(imgRef.current);
     console.log('Gif link:', inputValue);
+    console.log(`Cats: ${cats}, Dogs: ${dogs}`);
     try {
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
 
-      await program.rpc.addGif(inputValue, {
+      await program.rpc.addImage(inputValue, cats, dogs, {
         accounts: {
           baseAccount: baseAccount.publicKey,
         },
@@ -194,7 +199,7 @@ const App = () => {
 					{/* We use index as the key instead, also, the src is now item.gifLink */}
           {gifList.map((item, index) => (
             <div className="gif-item" key={index}>
-              <img src={item.gifLink} />
+              <img alt='Submitted GIF' ref={imgRef} src={item.gifLink} />
             </div>
           ))}
         </div>
