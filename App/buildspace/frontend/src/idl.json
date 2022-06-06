@@ -1,9 +1,9 @@
 {
-  "version": "0.0.0",
+  "version": "0.1.0",
   "name": "myepicproject",
   "instructions": [
     {
-      "name": "startStuffOff",
+      "name": "startStuff",
       "accounts": [
         {
           "name": "baseAccount",
@@ -24,7 +24,7 @@
       "args": []
     },
     {
-      "name": "addGif",
+      "name": "addImage",
       "accounts": [
         {
           "name": "baseAccount",
@@ -34,10 +34,29 @@
       ],
       "args": [
         {
-          "name": "gifLink",
+          "name": "imageLink",
           "type": "string"
+        },
+        {
+          "name": "cats",
+          "type": "u64"
+        },
+        {
+          "name": "dogs",
+          "type": "u64"
         }
       ]
+    },
+    {
+      "name": "updateCount",
+      "accounts": [
+        {
+          "name": "baseAccount",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": []
     }
   ],
   "accounts": [
@@ -47,14 +66,22 @@
         "kind": "struct",
         "fields": [
           {
-            "name": "totalGifs",
+            "name": "imageCount",
             "type": "u64"
           },
           {
-            "name": "gifList",
+            "name": "dogCount",
+            "type": "u64"
+          },
+          {
+            "name": "catCount",
+            "type": "u64"
+          },
+          {
+            "name": "images",
             "type": {
               "vec": {
-                "defined": "ItemStruct"
+                "defined": "Image"
               }
             }
           }
@@ -64,23 +91,27 @@
   ],
   "types": [
     {
-      "name": "ItemStruct",
+      "name": "Image",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "gifLink",
+            "name": "imageLink",
             "type": "string"
           },
           {
-            "name": "userAddress",
-            "type": "publicKey"
+            "name": "catCount",
+            "type": "u64"
+          },
+          {
+            "name": "dogCount",
+            "type": "u64"
           }
         ]
       }
     }
   ],
   "metadata": {
-    "address": "6VvuZvbLYgYoUup7WtPgm4TT7L1YUyGx6U8ExJJQzvGa"
+    "address": "Ci141UfXb3zQYRsMSjcAfSUd3GZRmZJaXqGx1J2XQqxn"
   }
 }

@@ -34,7 +34,7 @@ const App = () => {
   // State
   const [walletAddress, setWalletAddress] = useState(null);
   const [inputValue, setInputValue] = useState('');
-  const [gifList, setGifList] = useState([]);
+  const [images, setImages] = useState([]);
   
   // Actions
   const checkIfWalletIsConnected = async () => {
@@ -94,27 +94,27 @@ const App = () => {
 	  return provider;
   };
 
-  const getGifList = async() => {
+  const getImages = async() => {
     try {
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
       const account = await program.account.baseAccount.fetch(baseAccount.publicKey);
     
       console.log("Got the account", account)
-      setGifList(account.gifList)
+      setImages(account.images)
 
     } catch (error) {
-      console.log("Error in getGifs: ", error)
-      setGifList(null);
+      console.log("Error in getimages: ", error)
+      setImages(null);
     }
   };
 
-  const createGifAccount = async () => {
+  const createImageAccount = async () => {
     try {
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
       console.log("ping")
-      await program.rpc.startStuffOff({
+      await program.rpc.startStuff({
         accounts: {
           baseAccount: baseAccount.publicKey,
           user: provider.wallet.publicKey,
@@ -123,32 +123,32 @@ const App = () => {
         signers: [baseAccount]
       });
       console.log("Created a new BaseAccount w/ address:", baseAccount.publicKey.toString())
-      await getGifList();
+      await getImages();
 
     } catch(error) {
       console.log("Error creating BaseAccount account:", error)
     }
   };
 
-  const sendGif = async () => {
+  const sendImage = async () => {
     if (inputValue.length === 0) {
-      console.log("No gif link given!")
+      console.log("No image link given!")
       return
     }
-    console.log('Gif link:', inputValue);
+    console.log('image link:', inputValue);
     try {
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
 
-      await program.rpc.addGif(inputValue, {
+      await program.rpc.addImage(inputValue, {
         accounts: {
           baseAccount: baseAccount.publicKey,
         },
       });
-      console.log("GIF sucesfully sent to program", inputValue)
-      await getGifList();
+      console.log("image sucesfully sent to program", inputValue)
+      await getImages();
     } catch (error) {
-      console.log("Error sending GIF:", error)
+      console.log("Error sending image:", error)
     }
   };
   
@@ -168,33 +168,33 @@ const App = () => {
 
   const renderConnectedContainer = () => {
 	// If we hit this, it means the program account hasn't be initialized.
-  if (gifList === null) {
+  if (images === null) {
     return (
       <div className="connected-container">
-        <button className="cta-button submit-gif-button" onClick={createGifAccount}>
-          Do One-Time Initialization For GIF Program Account
+        <button className="cta-button submit-image-button" onClick={createImageAccount}>
+          Do One-Time Initialization For image Program Account
         </button>
       </div>
     )
   } 
-	// Otherwise, we're good! Account exists. User can submit GIFs.
+	// Otherwise, we're good! Account exists. User can submit images.
 	else {
     return(
       <div className="connected-container">
         <input
           type="text"
-          placeholder="Enter gif link!"
+          placeholder="Enter image link!"
           value={inputValue}
           onChange={onInputChange}
         />
-        <button className="cta-button submit-gif-button" onClick={sendGif}>
+        <button className="cta-button submit-image-button" onClick={sendImage}>
           Submit
         </button>
-        <div className="gif-grid">
-					{/* We use index as the key instead, also, the src is now item.gifLink */}
-          {gifList.map((item, index) => (
-            <div className="gif-item" key={index}>
-              <img src={item.gifLink} />
+        <div className="image-grid">
+					{/* We use index as the key instead, also, the src is now item.imageLink */}
+          {images.map((item, index) => (
+            <div className="image-item" key={index}>
+              <img src={item.imageLink} />
             </div>
           ))}
         </div>
@@ -216,8 +216,8 @@ const App = () => {
 
   useEffect(() => {
     if (walletAddress) {
-      console.log('Fetching GIF list...');
-      getGifList();
+      console.log('Fetching image list...');
+      getImages();
     }
   }, [walletAddress]);
 
@@ -228,7 +228,7 @@ const App = () => {
         <div className="header-container">
           <p className="header">🖼 Solana Doge Contest</p>
           <p className="sub-text">
-            View your GIF collection in the metaverse ✨
+            View your image collection in the metaverse ✨
           </p>
           {/* Add the condition to show this only if we don't have a wallet address */}
           {!walletAddress && renderNotConnectedContainer()}
