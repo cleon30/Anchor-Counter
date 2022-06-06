@@ -117,7 +117,7 @@ const App = () => {
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
       console.log("ping")
-      await program.rpc.startStuffOff({
+      await program.rpc.startStuff({
         accounts: {
           baseAccount: baseAccount.publicKey,
           user: provider.wallet.publicKey,
