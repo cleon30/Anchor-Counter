@@ -24,58 +24,59 @@ You would probably need to install Solana, Anchor and Rust to make it run.
 If you haven't already, install those dependencies by following this tutorial : https://project-serum.github.io/anchor/getting-started/installation.html or the steps in the prerequisites section above.
 
 
-When you are set up, you can clone the repo and run the App using the following commands:
-1. Change into the project directory you'd like to run
+When you are set up, you can clone the repo and run the App by changing into the project directory and running the following commands:
 
-2. Install the dependencies
+1. Install the dependencies
 
 ```sh
 npm install
 ```
 
-3. Start a local Solana node
+2. Start a local Solana node
 
 ```sh
 solana-test-validator
 ```
 
-4. Build the anchor project
+3. Build the anchor project
 
 ```sh
 anchor build
 ```
 
-5. Fetch the project ID for the build:
+4. Fetch the project ID for the build:
 
 ```sh
 solana address -k target/deploy/<programname>-keypair.json
 ```
 
-6. Update the project ID in the Rust program located at __myepicproject/programs/src/lib.rs__ with the output from above.
+5. Update the project ID in the Rust program located at __myepicproject/programs/src/lib.rs__ with the output from above.
 
-7. Run the tests
+6. Run the tests
 
 ```sh
 anchor test
 ```
 
-8. Change into the __frontend__ directory and install the dependencies:
+7. Change into the __frontend__ directory and install the dependencies:
 
 ```sh
 cd app && npm install
 ``` 
 
-9. Run the client-side app
+8. Run the client-side app
 
 ```sh
 npm start
 ```
 
-10. If you need to you can airdrop solana to your address using:
+9. If you need to you can airdrop solana to your address using:
 
 ```bash
 solana airdrop 2 <YOURPUBKEY>
 ```
+
+Have fun!
 
 
 
