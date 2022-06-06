@@ -9,8 +9,10 @@ import {
 import idl from './idl.json';
 import kp from './keypair.json';
 
+
 // Constants
 const { SystemProgram, Keypair } = web3;
+const anchor = require("@project-serum/anchor");
 
 const arr = Object.values(kp._keypair.secretKey)
 const secret = new Uint8Array(arr)
@@ -96,11 +98,15 @@ const App = () => {
 
   const getImages = async() => {
     try {
+      
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
       const account = await program.account.baseAccount.fetch(baseAccount.publicKey);
-    
+      
       console.log("Got the account", account)
+      console.log("👀 Images Count", account.imageCount.toString());
+      console.log("🐶 Dog Count", account.dogCount.toString());
+      console.log("🐱 Cat Count", account.catCount.toString());
       setImages(account.images)
 
     } catch (error) {
@@ -139,12 +145,19 @@ const App = () => {
     try {
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
-
-      await program.rpc.addImage(inputValue, {
+      
+      await program.rpc.addImage(inputValue, new anchor.BN(105), new anchor.BN(5), {
+        accounts: {
+          baseAccount: baseAccount.publicKey,
+        },
+        
+      });
+      await program.rpc.updateCount({
         accounts: {
           baseAccount: baseAccount.publicKey,
         },
       });
+      
       console.log("image sucesfully sent to program", inputValue)
       await getImages();
     } catch (error) {
