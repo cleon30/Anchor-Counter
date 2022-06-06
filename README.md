@@ -8,7 +8,7 @@ It takes a link to the picture in the frontend, identifies the number of dogs an
 
 ### Prerequisites
 
-1. Node.js - It's recommended that you instal a LTS version of Node using [nvm](https://github.com/nvm-sh/nvm) 
+1. Node.js - It's recommended that you install a LTS version of Node using [nvm](https://github.com/nvm-sh/nvm) 
 
 2. Solana Tool Suite - You can see the installation instructions [here](https://docs.solana.com/cli/install-solana-cli-tools).
 
@@ -21,7 +21,7 @@ Welcome to our Anchor Counter App made at MLH Fellowship ^_^ !
 
 
 You would probably need to install Solana, Anchor and Rust to make it run.
-If you haven't already, install those dependencies by following this tutorial : https://project-serum.github.io/anchor/getting-started/installation.html
+If you haven't already, install those dependencies by following this tutorial : https://project-serum.github.io/anchor/getting-started/installation.html or the steps in the prerequisites section above.
 
 
 When you are set up, you can clone the repo and run the App using the following commands:
