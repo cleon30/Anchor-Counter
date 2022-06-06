@@ -1,5 +1,5 @@
 ## Anchor Counter
-A decentralized counter app that keeps count of the dog count and cat count in a single of multiple uploaded pictures.
+A decentralized counter app that keeps count of the number of dogs and the number of cats in a batch of uploaded pictures.
 
 ### Description
 This program is an entry to the MLH Fellowship Orientation Hackathon. It runs on a Solana smart contract written with the Anchor framework in Rust and Javascript + React for the frontend.
