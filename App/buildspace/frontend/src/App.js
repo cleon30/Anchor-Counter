@@ -239,7 +239,7 @@ const App = () => {
 			{/* This was solely added for some styling fanciness */}
 			<div className={walletAddress ? 'authed-container' : 'container'}>
         <div className="header-container">
-          <p className="header">🖼 Solana Doge Contest</p>
+          <p className="header">🐶 Solana Pet Competition🐱</p>
           <p className="sub-text">
             View your image collection in the metaverse ✨
           </p>
