@@ -19,9 +19,19 @@ const main = async () => {
   });
   
   console.log("📝 Your transaction signature", tx);
+  console.log("");
+  console.log(" GIF Count", account.imageCount.toString());
+  console.log(" Cat Count", account.catCount.toString());
 
-  let account = await program.account.baseAccount.fetch(baseAccount.publicKey);
+  // Access gif_list on the account!
+  console.log(" GIF List", account.images);
+
+  console.log(" Your transaction signature", tx);
+
+  console.log(" GIF Count", account.imageCount.toString());
+
   console.log("👀 Images Count", account.imageCount.toString());
+
   const value1 = new anchor.BN(4);
   const value2 = new anchor.BN(2);
   const value3 = new anchor.BN(1);
