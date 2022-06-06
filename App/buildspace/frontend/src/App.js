@@ -9,8 +9,10 @@ import {
 import idl from './idl.json';
 import kp from './keypair.json';
 
+
 // Constants
 const { SystemProgram, Keypair } = web3;
+const anchor = require("@project-serum/anchor");
 
 const arr = Object.values(kp._keypair.secretKey)
 const secret = new Uint8Array(arr)
@@ -139,8 +141,9 @@ const App = () => {
     try {
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
-
-      await program.rpc.addImage(inputValue, {
+      const value1 = new anchor.BN(4);
+      const value2 = new anchor.BN(2);
+      await program.rpc.addImage(inputValue,value1, value2, {
         accounts: {
           baseAccount: baseAccount.publicKey,
         },
