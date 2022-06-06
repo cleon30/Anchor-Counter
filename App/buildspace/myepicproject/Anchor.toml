@@ -1,9 +1,5 @@
 [programs.devnet]
-<<<<<<< HEAD
-myepicproject = "H2q9kpqbUFZx7v6B73iNKXmczeyd9aQbNurPJ5Nkf8oF"
-=======
-myepicproject = "B4knMUa4pqHjXAGFnMC9ehPJ6kF7kukopCUEtNdumPpz"
->>>>>>> f2af6bad8b64bf0028a908761d3cd803d54ba4ff
+myepicproject = "AGmmcxKsubmy2vGKBvGAfqKs8GVoGQNyD2LQHADg3x2u"
 
 [registry]
 url = "https://anchor.projectserum.com"
