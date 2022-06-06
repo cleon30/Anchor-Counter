@@ -5,7 +5,10 @@
   "dependencies": {
     "@project-serum/anchor": "^0.18.0",
     "@solana/web3.js": "^1.30.2",
-    "@tensorflow-models/mobilenet": "^2.1.0",
+    "@tensorflow-models/coco-ssd": "^2.2.2",
+    "@tensorflow/tfjs": "^3.18.0",
+    "@tensorflow/tfjs-backend-cpu": "^3.18.0",
+    "@tensorflow/tfjs-backend-webgl": "^3.18.0",
     "@web3auth/base": "0.11.0-alpha.0",
     "@web3auth/solana-provider": "0.11.0-alpha.0",
     "@web3auth/web3auth": "0.11.0-alpha.0",

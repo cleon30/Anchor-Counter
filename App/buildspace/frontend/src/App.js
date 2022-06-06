@@ -1,19 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, createRef } from 'react';
 import twitterLogo from './assets/twitter-logo.svg';
 import './App.css';
 import { Connection, PublicKey, clusterApiUrl} from '@solana/web3.js';
 import {
   Program, Provider, web3
 } from '@project-serum/anchor';
+import countCatsAndDogs from './countCatsAndDogs';
 
 import idl from './idl.json';
 import kp from './keypair.json';
 
-
 // Constants
 const { SystemProgram, Keypair } = web3;
 const anchor = require("@project-serum/anchor");
-
 const arr = Object.values(kp._keypair.secretKey)
 const secret = new Uint8Array(arr)
 const baseAccount = web3.Keypair.fromSecretKey(secret)
@@ -37,6 +36,8 @@ const App = () => {
   const [walletAddress, setWalletAddress] = useState(null);
   const [inputValue, setInputValue] = useState('');
   const [images, setImages] = useState([]);
+
+  const imgRef = createRef();
   
   // Actions
   const checkIfWalletIsConnected = async () => {
@@ -98,19 +99,16 @@ const App = () => {
 
   const getImages = async() => {
     try {
-      
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
       const account = await program.account.baseAccount.fetch(baseAccount.publicKey);
-      
+    
       console.log("Got the account", account)
-      console.log("👀 Images Count", account.imageCount.toString());
-      console.log("🐶 Dog Count", account.dogCount.toString());
-      console.log("🐱 Cat Count", account.catCount.toString());
+      
       setImages(account.images)
 
     } catch (error) {
-      console.log("Error in getimages: ", error)
+      console.log("Error in getImages: ", error)
       setImages(null);
     }
   };
@@ -141,23 +139,18 @@ const App = () => {
       console.log("No image link given!")
       return
     }
+    const [cats, dogs] = countCatsAndDogs(inputValue);
     console.log('image link:', inputValue);
+    console.log(`Cats: ${cats}, Dogs: ${dogs}`);
     try {
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
-      
-      await program.rpc.addImage(inputValue, new anchor.BN(105), new anchor.BN(5), {
-        accounts: {
-          baseAccount: baseAccount.publicKey,
-        },
-        
-      });
-      await program.rpc.updateCount({
+
+      await program.rpc.addImage(inputValue, new anchor.BN(cats), new anchor.BN(dogs), {
         accounts: {
           baseAccount: baseAccount.publicKey,
         },
       });
-      
       console.log("image sucesfully sent to program", inputValue)
       await getImages();
     } catch (error) {
@@ -207,7 +200,7 @@ const App = () => {
 					{/* We use index as the key instead, also, the src is now item.imageLink */}
           {images.map((item, index) => (
             <div className="image-item" key={index}>
-              <img src={item.imageLink} />
+              <img alt='Submitted image' ref={imgRef} src={item.imageLink} />
             </div>
           ))}
         </div>
@@ -239,7 +232,7 @@ const App = () => {
 			{/* This was solely added for some styling fanciness */}
 			<div className={walletAddress ? 'authed-container' : 'container'}>
         <div className="header-container">
-          <p className="header">🐶 Solana Pet Competition🐱</p>
+          <p className="header">🖼 Solana Doge Contest</p>
           <p className="sub-text">
             View your image collection in the metaverse ✨
           </p>
